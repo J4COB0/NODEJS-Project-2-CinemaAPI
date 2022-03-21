@@ -9,7 +9,7 @@ const {
     deleteUser
 } = require('../controllers/users.controller');
 
-const router = express.Router();
+const router = express.Router(); 
 
 // Get all actors
 router.get('/', getAllUsers);
