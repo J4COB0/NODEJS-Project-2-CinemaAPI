@@ -26,4 +26,4 @@ router.patch('/:id', updateActor);
 // Delete an actor
 router.delete('/:id', deleteActor);
 
-module.exports = { usersRouter: router };
+module.exports = { actorsRouter: router };
