@@ -6,6 +6,7 @@
 // 4. Establish relation between models
 
 
+
 // Activity #2:
 
 // 1. Create actors router 
@@ -24,3 +25,20 @@
 // 3. Pass the newly created functions to their respective endpoint of their router 
 // 4. Do the step 1, 2, and 3 but for movies and users
 
+
+
+// Activity # 3
+
+Objective: Create a function to insert a new actor in the database
+      a) Create a function to insert a new actor in the database
+      a) Create a function to get all actors
+      a) Create a function to get actor by id
+      a) Create a function to update an actor by id (name, country, age)
+      a) Create a function that disables the actor (delete) by id
+
+Same for users and movies
+
+NOTE: Image uploading is not necessary but an extra
+NOTE: Password must be encrypted for users
+NOTE: Update user fields (username, email)
+NOTE: Update movie fields (title, description, duration, genre)
