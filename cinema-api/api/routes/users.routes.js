@@ -6,16 +6,20 @@ const {
     getAnUserById,
     createNewUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    loginUser
 } = require('../controllers/users.controller');
+
+// Middleware
+const { validateSession } = require('../middlewares/auth.middleware');
 
 const router = express.Router(); 
 
 // Get all actors
-router.get('/', getAllUsers);
+router.get('/', validateSession, getAllUsers);
 
 // Get an actor by id
-router.get('/:id', getAnUserById);
+router.get('/:id', validateSession, getAnUserById);
 
 // Create a new actor
 router.post('/', createNewUser);
@@ -25,5 +29,8 @@ router.patch('/:id', updateUser);
 
 // Delete an actor
 router.delete('/:id', deleteUser);
+
+// Loggin
+router.post('/login', loginUser);
 
 module.exports = { usersRouter: router };

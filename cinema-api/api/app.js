@@ -9,7 +9,7 @@ const { moviesRouter } = require('./routes/movies.routes');
 const { usersRouter } = require('./routes/users.routes');
 
 // Utils
-const { AppError } = require('./utils/appError');
+const { AppError } = require('./util/appError');
 
 // Init express
 const app = express();

@@ -141,3 +141,32 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
         status: 'Success'
     });
 });
+
+
+exports.loginUser = catchAsync(async (req, res, next) => {
+    const { email, password } = req.body;
+  
+    // Find user given an email and has status active
+    const user = await User.findOne({
+      where: { email: email, status: 'active' }
+    });
+  
+    // Compare entered password vs hashed password
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return next(new AppError(400, 'Credentials are invalid'));
+    }
+  
+    // Create JWT
+    const token = await jwt.sign(
+      { id: user.id }, // Token payload
+      process.env.JWT_SIGNATURE, // Secret key
+      {
+        expiresIn: process.env.JWT_EXPIRES_IN
+      }
+    );
+  
+    res.status(200).json({
+      status: 'success',
+      data: { token }
+    });
+  });

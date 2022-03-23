@@ -42,3 +42,16 @@ NOTE: Image uploading is not necessary but an extra
 NOTE: Password must be encrypted for users
 NOTE: Update user fields (username, email)
 NOTE: Update movie fields (title, description, duration, genre)
+
+
+
+// Activity # 4
+
+Objective: Implement login authorization 
+      a) Install jsonwebtoken library
+      b) Create a login endpoint for user
+      c) Verify that credentials (email, password) are valid 
+      d) Generate JWT and send it on the response
+      e) Create a middleware that validates the token
+
+Apply this middelware on the endpoint that gets all actors to see if it works
