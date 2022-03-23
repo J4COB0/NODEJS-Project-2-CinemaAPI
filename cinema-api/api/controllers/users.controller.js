@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 
 // Models
 const { User } = require('../models/user.model');
@@ -7,6 +8,7 @@ const { Review } = require('../models/review.model');
 // Utils
 const { catchAsync } = require('../util/catchAsync');
 const { filterObj } = require('../util/filterObject');
+const { AppError } = require('../util/appError');
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
     const users = await User.findAll({
@@ -118,7 +120,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
 exports.deleteUser = catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
-    const user = User.findOne({
+    const user = await User.findOne({
         where: {
             id: id,
             status: 'active'
@@ -126,16 +128,18 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
     });
 
     if (!user) {
-        res.status(204).json({
+        res.status(400).json({
             status: 'Error',
             message: 'Cannot found the user with the ID given'
         });
         return;
     }
 
+    console.log(user);
+
     // Soft delete
-    const data = { status: 'deleted' };
-    await user.update({ ...data });
+    //const data = { status: 'deleted' };
+    await user.update({ status: 'deleted' });
 
     res.status(204).json({
         status: 'Success'
