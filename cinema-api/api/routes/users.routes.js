@@ -13,7 +13,7 @@ const {
 // Middleware
 const { validateSession } = require('../middlewares/auth.middleware');
 
-const router = express.Router(); 
+const router = express.Router();
 
 // Loggin
 router.post('/login', loginUser);
@@ -22,7 +22,7 @@ router.post('/login', loginUser);
 router.post('/', createNewUser);
 
 // Validate sessions
-router.use(validateSession)
+router.use(validateSession);
 
 // Get all actors
 router.get('/', getAllUsers);

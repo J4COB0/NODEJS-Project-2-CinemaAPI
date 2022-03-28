@@ -14,7 +14,7 @@ const { AppError } = require('./util/appError');
 // Init express
 const app = express();
 
-// Enable JSON 
+// Enable JSON
 app.use(express.json());
 
 // Enable FORM DATA request

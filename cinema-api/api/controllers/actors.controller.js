@@ -54,7 +54,7 @@ exports.createNewActor = catchAsync(async (req, res, next) => {
         !age ||
         !profilePic ||
         name.length === 0 ||
-        rating < 0 || 
+        rating < 0 ||
         rating > 5 ||
         country.length === 0 ||
         profilePic.length === 0
@@ -84,7 +84,14 @@ exports.createNewActor = catchAsync(async (req, res, next) => {
 exports.updateActor = catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
-    const data = filterObj(req.body, 'name', 'country', 'age', 'rating', 'profilePic');
+    const data = filterObj(
+        req.body,
+        'name',
+        'country',
+        'age',
+        'rating',
+        'profilePic'
+    );
     const actor = await Actor.findOne({
         where: {
             id: id,

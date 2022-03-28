@@ -43,7 +43,8 @@ exports.getAMovieById = catchAsync(async (req, res, next) => {
 });
 
 exports.createNewMovie = catchAsync(async (req, res, next) => {
-    const { title, description, duration, image, genre, rating, actorsId } = req.body;
+    const { title, description, duration, image, genre, rating, actorsId } =
+        req.body;
 
     // Validating empty fields
     if (
@@ -79,8 +80,8 @@ exports.createNewMovie = catchAsync(async (req, res, next) => {
         genre: genre
     });
 
-    const actorInMoviePromises = actorsId.map(async actorId => {
-       const newActorInMovie = await ActorInMovie.create({
+    const actorInMoviePromises = actorsId.map(async (actorId) => {
+        const newActorInMovie = await ActorInMovie.create({
             actorId: actorId,
             movieId: newMovie.id
         });
@@ -99,7 +100,14 @@ exports.createNewMovie = catchAsync(async (req, res, next) => {
 exports.updateMovie = catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
-    const data = filterObj(req.body, 'title', 'description', 'image', 'genre', 'duration');
+    const data = filterObj(
+        req.body,
+        'title',
+        'description',
+        'image',
+        'genre',
+        'duration'
+    );
     const movie = await Movie.findOne({
         where: {
             id: id,

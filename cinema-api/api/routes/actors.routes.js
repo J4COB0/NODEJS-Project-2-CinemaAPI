@@ -10,7 +10,10 @@ const {
 } = require('../controllers/actors.controller');
 
 // Middleware
-const { validateSession, protectAdmin } = require('../middlewares/auth.middleware');
+const {
+    validateSession,
+    protectAdmin
+} = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 

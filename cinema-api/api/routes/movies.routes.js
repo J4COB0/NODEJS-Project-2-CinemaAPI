@@ -4,13 +4,16 @@ const express = require('express');
 const {
     getAllMovies,
     getAMovieById,
-    createNewMovie, 
+    createNewMovie,
     updateMovie,
     deleteMovie
 } = require('../controllers/movies.controller');
 
 // Middlewares
-const { validateSession, protectAdmin } = require('../middlewares/auth.middleware')
+const {
+    validateSession,
+    protectAdmin
+} = require('../middlewares/auth.middleware');
 
 // Utils
 const { upload } = require('../util/multer');
