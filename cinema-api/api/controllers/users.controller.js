@@ -53,7 +53,7 @@ exports.getAnUserById = catchAsync(async (req, res, next) => {
 });
 
 exports.createNewUser = catchAsync(async (req, res, next) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     // Validating empty fields
     if (
@@ -79,7 +79,8 @@ exports.createNewUser = catchAsync(async (req, res, next) => {
     const newUser = await User.create({
         username: username,
         email: email,
-        password: hashedPassword
+        password: hashedPassword, 
+        role
     });
     newUser.password = undefined;
 

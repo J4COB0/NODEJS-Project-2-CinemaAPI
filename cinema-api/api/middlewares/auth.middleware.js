@@ -32,9 +32,8 @@ exports.validateSession = catchAsync(
         token,
         process.env.JWT_SIGNATURE
       );
-  
+
       // Validate that the id the token contains belongs to a valid user
-      // SELECT id, email FROM users;
       const user = await User.findOne({
         where: { id: decodedToken.id, status: 'active' },
         attributes: {
@@ -46,7 +45,16 @@ exports.validateSession = catchAsync(
         return next(new AppError(401, 'Invalid session'));
       }
   
-      // Grant access
+      req.currentUser = user;
       next();
     }
   );
+
+exports.protectAdmin = catchAsync(async (req, res, next) => {
+  const { currentUser } = req;
+  if (currentUser.role != 'admin') {
+    return next(new AppError(403, 'Access denied'));
+  }
+
+  next();
+});

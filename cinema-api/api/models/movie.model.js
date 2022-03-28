@@ -19,7 +19,7 @@ const Movie = sequelize.define('movie', {
         allowNull: false
     },
     duration: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING(100),
         defaultValue: 0,
         allowNull: false
     },

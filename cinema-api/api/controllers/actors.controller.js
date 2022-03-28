@@ -5,6 +5,7 @@ const { Movie } = require('../models/movie.model');
 // Utils
 const { catchAsync } = require('../util/catchAsync');
 const { filterObj } = require('../util/filterObject');
+const { AppError } = require('../util/appError');
 
 exports.getAllActors = catchAsync(async (req, res, next) => {
     const actors = await Actor.findAll({
@@ -43,23 +44,25 @@ exports.getAnActorById = catchAsync(async (req, res, next) => {
 });
 
 exports.createNewActor = catchAsync(async (req, res, next) => {
-    const { name, country, age, profilePic } = req.body;
+    const { name, country, rating, age, profilePic } = req.body;
 
     // Validating empty fields
     if (
         !name ||
         !country ||
+        !rating ||
         !age ||
         !profilePic ||
         name.length === 0 ||
+        rating < 0 || 
+        rating > 5 ||
         country.length === 0 ||
-        age.length === 0 ||
         profilePic.length === 0
     ) {
         return next(
             new AppError(
                 400,
-                'Insure to include all information for actor request'
+                'Insure to include all correctly information for actor request'
             )
         );
     }
@@ -67,6 +70,7 @@ exports.createNewActor = catchAsync(async (req, res, next) => {
     const newActor = await Actor.create({
         name: name,
         country: country,
+        rating: rating,
         age: age,
         profilePic: profilePic
     });
@@ -80,7 +84,7 @@ exports.createNewActor = catchAsync(async (req, res, next) => {
 exports.updateActor = catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
-    const data = filterObj(req.body, 'name', 'country', 'age', 'rating');
+    const data = filterObj(req.body, 'name', 'country', 'age', 'rating', 'profilePic');
     const actor = await Actor.findOne({
         where: {
             id: id,
@@ -104,7 +108,7 @@ exports.updateActor = catchAsync(async (req, res, next) => {
 exports.deleteActor = catchAsync(async (req, res, next) => {
     const { id } = req.params;
 
-    const actor = Actor.findOne({
+    const actor = await Actor.findOne({
         where: {
             id: id,
             status: 'active'
@@ -112,7 +116,7 @@ exports.deleteActor = catchAsync(async (req, res, next) => {
     });
 
     if (!actor) {
-        res.status(204).json({
+        res.status(400).json({
             status: 'error',
             message: 'Cannot found the actor with the ID given'
         });
